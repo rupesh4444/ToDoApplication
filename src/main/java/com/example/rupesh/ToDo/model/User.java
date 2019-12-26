@@ -11,9 +11,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    private String firstname;
     private String username;
     private String password;
+    private String resetToken;
 
     @Transient
     private String passwordConfirm;
@@ -27,6 +28,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getUsername() {
@@ -61,4 +70,11 @@ public class User {
         this.roles = roles;
     }
 
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
 }

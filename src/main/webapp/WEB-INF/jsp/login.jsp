@@ -29,24 +29,20 @@
   </head>
 
   <body>
-
+    <center>
     <div class="container">
-     <center> <form method="POST" action="${contextPath}/login" class="form-signin">
-        <h4 class="form-heading">Log In</h4>
-
+        <form:form id="loginForm" method="post" action="login" modelAttribute="loginBean">
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
-            <input width="50%" name="username" type="text" style="width:300px;" class="form-control" placeholder="Email"
-                   autofocus="true"/>  <br/>
-            <input width="50%" name="password" type="password" style="width:300px;" class="form-control" placeholder="Password"/>
-            <span>${error}</span>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/><br/>
-
-            <button class="btn btn-success" type="submit">Log In</button>
-
+            <h4 class="form-signin-heading">Log In</h4>
+            <form:input id="username" name="username" path="username" placeholder="Email" style="width:300px;"/><br/><br/>
+            <form:password id="password" name="password" path="password" placeholder='Password' style="width:300px;"/><br/><br/>
+            <input type="submit" class="btn btn-success" value="Submit" />
         </div>
-      </form></center>
+        </form:form>
+        <a type="button" href="/forgot-password">Forgot Password</a>
     </div>
+    </center>
   </body>
 </html>
 <%@ include file="common/footer_out.jspf"%>

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -33,4 +34,20 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+    @Override
+    public void updatePassword(String password, Long userId) {
+        userRepository.updatePassword(password, userId);
+    }
+
+    @Override
+    public Optional<User> findUserByResetToken(String resetToken) {
+        return userRepository.findByResetToken(resetToken);
+    }
+
+    @Override
+    public boolean isValidUser(String username, String password){
+        if(userRepository.findByUsername(username) != null)
+            return true;
+        return false;
+    }
 }

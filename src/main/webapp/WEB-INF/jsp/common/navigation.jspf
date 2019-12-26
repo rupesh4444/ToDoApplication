@@ -3,6 +3,17 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+       .w3-dropdown-hover{
+          margin: 0;
+            position: absolute;
+            top: 4%;
+            left: 67%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+</style>
+
+<style>
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -36,9 +47,15 @@ body {
 <body>
 
 <div class="topnav">
-  <a class="active" href="/welcome">Home</a>
+  <a href="/welcome">Home</a>
   <a href="/list-todo">Todos</a>
-  <a href="/logout">Logout</a>
+
+
+
+  <div class="w3-dropdown-hover">
+      <a href="">${pageContext.request.userPrincipal.name}</a>
+      <a href="/logout">Logout</a>
+  </div>
 </div>
 
 </body>

@@ -34,9 +34,16 @@
 
         <center><form:form method="POST" modelAttribute="userForm" class="form-signin">
             <h4 class="form-signin-heading">Create your account</h4>
+            <spring:bind path="firstname">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <form:input type="text" style="width:300px;" path="firstname" class="form-control" placeholder="Firstname"
+                                            autofocus="true"></form:input>
+                                <form:errors path="firstname"></form:errors>
+                            </div>
+            </spring:bind>
             <spring:bind path="username">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" style="width:300px;" path="username" class="form-control" placeholder="Email"
+                    <form:input type="email" style="width:300px;" path="username" class="form-control" placeholder="Email"
                                 autofocus="true"></form:input>
                     <form:errors path="username"></form:errors>
                 </div>
@@ -58,8 +65,9 @@
             </spring:bind>
 
             <button class="btn btn-success" type="submit">Register</button>
-        </form:form></center>
-
+        </form:form>
+        <a type="button" href="/forgot-password">Forgot Password</a>
+        </center>
     </div>
   </body>
 </html>
