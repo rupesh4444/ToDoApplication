@@ -218,15 +218,22 @@ public class ToDoController {
         else{
             PasswordResetToken token = new PasswordResetToken();
             User user = optional.get();
+            token.setUser(user);
+            token.setToken(UUID.randomUUID().toString());
             user.setResetToken(UUID.randomUUID().toString());
+            token.setExpiryDate(30);
+            tokenRepository.save(token);
             userService.save(user);
-            String resetUrl = request.getScheme() + "://" + request.getServerName();
+            String resetUrl = request.getScheme() + "://" + request.getServerName()+":"+request.getServerPort();
             Mail mail = new Mail();
             mail.setFrom("no-reply");
             mail.setTo(user.getUsername());
             mail.setSubject("Password Reset Request");
-            mail.setText("To reset your password, click the link below:\n" +resetUrl+ "/reset?token=" + user.getResetToken());
+            mail.setText("To reset your password, click the link below:\n" +resetUrl+ "/reset-password?token=" + user.getResetToken());
             Map<String, Object> model1 = new HashMap<>();
+            model1.put("resetUrl", resetUrl + "/reset-password?token=" + token.getToken());
+            model1.put("token",token);
+            model1.put("user",user);
             model1.put("resetUrl", resetUrl + "/reset-password?token=" + token.getToken());
             mail.setModel(model1);
             emailService.sendEmail(mail);
@@ -236,7 +243,7 @@ public class ToDoController {
         return model;
     }
 
-    @RequestMapping(value="/reset", method = RequestMethod.GET)
+    @RequestMapping(value="/reset-password", method = RequestMethod.GET)
     public ModelAndView displayResetPasswordPage(ModelAndView model, @ModelAttribute("token")String token){
         Optional<User> user = userService.findUserByResetToken(token);
         if(user.isPresent()){
@@ -249,7 +256,7 @@ public class ToDoController {
         return model;
     }
 
-    @RequestMapping(value = "/reset", method = RequestMethod.POST)
+    @RequestMapping(value = "/reset-password", method = RequestMethod.POST)
     public ModelAndView setNewPassword(ModelAndView model, @ModelAttribute Map<String, String> requestParams, RedirectAttributes redir){
         Optional<User> user = userService.findUserByResetToken(requestParams.get("token"));
         if(user.isPresent()){
